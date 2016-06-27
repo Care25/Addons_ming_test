@@ -25,7 +25,7 @@
     'data': [
         'security/security.xml',
         'suggestion_view.xml',
-        'data/suggestion_data.xml',
+#         'data/suggestion_data.xml',
         'suggestion_action_workflow.xml',
     ],
     # only loaded in demonstration mode

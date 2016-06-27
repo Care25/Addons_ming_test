@@ -15,41 +15,19 @@ class Suggestion(models.Model):
     @api.model
     def _get_default_name(self):
         return self.env['res.users'].browse(self.env.uid)
-    
-#     main_suggest = fields.Selection([('program','แจ้งแก้ไขโปรแกรม'),('car','ร้องเรียนกระบวนการที่ไม่เป็นไปตามข้อตกลง'),('ask','คำถามเกี่ยวกับโปรแกรมและกระบวนการ')
-#                                 ,('report','แจ้งแก้ไขเอกสาร'),('idea','แนะนำและเสนอข้อคิดเห็นเกี่ยวกับงาน')])
-#     functional = fields.Selection([('sale','งานขาย'),
-#                     ('purchase','งานจัดซื้อ'),
-#                     ('warehouse','งานคลังสินค้า'),
-#                     ('delivery','งานจัดส่ง'),
-#                     ('account','งานเอกสารบัญชี/การเงิน'),
-#                     ('hr','งานบุคคล'),
-#                     ('others','งานอื่นๆ')])
-#     
-#     found_date = fields.Date(default = fields.Date.today())
-# #    name = fields.Many2one('res.users', default=lambda self: self.env.user)
-#     name = fields.Char('ผู้แจ้งเรื่อง', size=32, required=True,
-#                        default=_get_default_name)
-# #     name = fields.Many2one('res.users', default=_get_default_name)
-#     manager = fields.Many2one('res.users')
-#     note = fields.Text('รายละเอียด')
-#     state = fields.Selection(selection=_STATES,
-#                              string='Status',
-#                              required=True,
-#                              default='draft')  
-    _track = {
-        'state': {
-            'suggestion.mt_suggestion_to_approve': 
-                (lambda self, cr, uid, obj,
-                ctx=None: obj.state == 'submitted'),
-            'suggestion.mt_suggestion_approved':
-                (lambda self, cr, uid, obj,
-                ctx=None: obj.state == 'received'),
-            'suggestion.mt_suggestion_done':
-                (lambda self, cr, uid, obj,
-                ctx=None: obj.state == 'done'),
-        },
-    }
+#     _track = {
+#         'state': {
+#             'suggestion.mt_suggestion_to_approve': 
+#                 (lambda self, cr, uid, obj,
+#                 ctx=None: obj.state == 'submitted'),
+#             'suggestion.mt_suggestion_approved':
+#                 (lambda self, cr, uid, obj,
+#                 ctx=None: obj.state == 'received'),
+#             'suggestion.mt_suggestion_done':
+#                 (lambda self, cr, uid, obj,
+#                 ctx=None: obj.state == 'done'),
+#         },
+#     }
     
     main_suggest = fields.Selection([('program','แจ้งแก้ไขโปรแกรม'),('car','ร้องเรียนกระบวนการที่ไม่เป็นไปตามข้อตกลง'),('ask','คำถามเกี่ยวกับโปรแกรมและกระบวนการ')
                                 ,('report','แจ้งแก้ไขเอกสาร'),('idea','แนะนำและเสนอข้อคิดเห็นเกี่ยวกับงาน')],track_visibility='onchange')
@@ -108,8 +86,6 @@ class Suggestion(models.Model):
                 a = r"มีผู้แจ้งหัวข้อ:: แจ้งแก้ไขเอกสาร" +"<br />" + r" รายละเอียด:: " + str(self.note)
             if self.main_suggest == 'idea':
                 a = r"มีผู้แจ้งหัวข้อ:: แนะนำและเสนอข้อคิดเห็นเกี่ยวกับงาน" +"<br />" + r" รายละเอียด:: " + str(self.note)
-#         records = self._get_followers('')
-#         followers = records[ids[0]]['message_follower_ids']
         self.message_post( body= a, subtype='mt_comment') 
         return True
 
