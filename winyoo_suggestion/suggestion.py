@@ -11,10 +11,6 @@ _STATES = [
 class Suggestion(models.Model):
     _name= 'suggestion'
     _inherit = ['mail.thread', 'ir.needaction_mixin']
-    _track = {
-        ''
-    
-    }
     
     @api.model
     def _get_default_name(self):
@@ -100,19 +96,21 @@ class Suggestion(models.Model):
     @api.multi
     def button_submitted(self):
         self.state = 'submitted'
-#         a = ""
-#         if self.main_suggest:
-#             if self.main_suggest == "program":
-#                 a = r"มีผู้แจ้งหัวข้อ:: แจ้งแก้ไขโปรแกรม" +"<br />" + r" รายละเอียด:: " + str(self.note)
-#             if self.main_suggest == 'car':
-#                 a = r"มีผู้แจ้งหัวข้อ:: ร้องเรียนกระบวนการที่ไม่เป็นไปตามข้อตกลง" +"<br />" + r" รายละเอียด:: " + str(self.note)
-#             if self.main_suggest == 'ask':
-#                 a = r"มีผู้แจ้งหัวข้อ:: คำถามเกี่ยวกับโปรแกรมและกระบวนการ" +"<br />" + r" รายละเอียด:: " + str(self.note)
-#             if self.main_suggest == 'report':
-#                 a = r"มีผู้แจ้งหัวข้อ:: แจ้งแก้ไขเอกสาร" +"<br />" + r" รายละเอียด:: " + str(self.note)
-#             if self.main_suggest == 'idea':
-#                 a = r"มีผู้แจ้งหัวข้อ:: แนะนำและเสนอข้อคิดเห็นเกี่ยวกับงาน" +"<br />" + r" รายละเอียด:: " + str(self.note)
-#         self.message_post( body= a) 
+        a = ""
+        if self.main_suggest:
+            if self.main_suggest == "program":
+                a = r"มีผู้แจ้งหัวข้อ:: แจ้งแก้ไขโปรแกรม" +"<br />" + r" รายละเอียด:: " + str(self.note)
+            if self.main_suggest == 'car':
+                a = r"มีผู้แจ้งหัวข้อ:: ร้องเรียนกระบวนการที่ไม่เป็นไปตามข้อตกลง" +"<br />" + r" รายละเอียด:: " + str(self.note)
+            if self.main_suggest == 'ask':
+                a = r"มีผู้แจ้งหัวข้อ:: คำถามเกี่ยวกับโปรแกรมและกระบวนการ" +"<br />" + r" รายละเอียด:: " + str(self.note)
+            if self.main_suggest == 'report':
+                a = r"มีผู้แจ้งหัวข้อ:: แจ้งแก้ไขเอกสาร" +"<br />" + r" รายละเอียด:: " + str(self.note)
+            if self.main_suggest == 'idea':
+                a = r"มีผู้แจ้งหัวข้อ:: แนะนำและเสนอข้อคิดเห็นเกี่ยวกับงาน" +"<br />" + r" รายละเอียด:: " + str(self.note)
+#         records = self._get_followers('')
+#         followers = records[ids[0]]['message_follower_ids']
+        self.message_post( body= a, subtype='mt_comment') 
         return True
 
     @api.multi
