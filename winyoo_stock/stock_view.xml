@@ -84,8 +84,6 @@
 
 		    </field>
 		</record>
-        
-        <!-- ***********default state_confirm_receive : 3_sure, 4_return  ******* -->
 
         <record id="view_picking_search_inherit" model="ir.ui.view">
             <field name="name">state.stock.picking.search</field>
