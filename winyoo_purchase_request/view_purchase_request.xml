@@ -34,8 +34,7 @@
                 <field name="picking_type_id" position="attributes">
                 	<attribute name="options">{"no_open":True,"no_create_edit":True}</attribute>
                 	<attribute name="domain">[('code','=','incoming')]</attribute>
-                </field>    
-                
+                </field>
                 <xpath expr="//notebook/page/field/form/sheet/group/group/field[@name='product_id']" position="attributes">
                 	<attribute name="options">{"no_open":True,"no_create_edit":True}</attribute>
                 </xpath>
@@ -105,10 +104,10 @@
                 model="ir.actions.act_window">
             <field name="name">PR Wait for Approver</field>
             <field name="type">ir.actions.act_window</field>
-            <field name="res_model">purchase.request.line</field>
+            <field name="res_model">purchase.request</field>
             <field name="view_type">form</field>
             <field name="view_mode">tree,form</field>
-            <field name="domain">[('request_state','=','to_approve')]</field>
+            <field name="domain">[('state','=','to_approve')]</field>
         </record>    
             <!-- <field name="search_view_id" ref="purchase_request.purchase_request_line_search"/>     -->   
 

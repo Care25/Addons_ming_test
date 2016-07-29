@@ -15,8 +15,6 @@
                 <!-- quick_add="True" ทำให้ Error แต่ก็ช่วยให้ไม่สามารถกด Quick Add ได้เหมือนกัน เราอาจะเอาออกในอนาคต -->
                     <field name="origin"/>
                     <field name="partner_id"/>
-<!--                     <field name="move_lines"/> -->
-
                     <!-- <field name="product_id"/> ติดปัญหาเลือกได้แค่สินค้าตัวบนสุด อยากให้จำนวนด้วย-->
                 </calendar>
             </field>
@@ -51,7 +49,8 @@
             <field name="arch" type="xml">
             	<!-- ต้องระวัง color= "state_confirm_receive" ถ้าไม่มีค่าใน state_confirm_receive มันจะ error -->
                 <calendar string="Calendar View" date_start="min_date" date_stop="max_date" color="state_confirm_receive" quick_add="True">
-                    <field name="origin"/>
+                    <field name='origin'/>
+                    <field name='po_name'/>
                     <field name="state_confirm_receive"/>
                     <!-- ติดปัญหาอยากให้มัดึงเป็น name ไว้แสดงแทน ไม่ใช่ id -->
                     <!-- <field name="product_id"/>  เหมือนกับข้างบนได้แต่ชื่ออันดับแรก และอยากจะใส่จำนวนด้วย-->
@@ -190,40 +189,8 @@
             groups="base.group_sale_salesco,base.group_erp_manager"
             sequence="10"/> 
 
-<!-- ******************** default state_confirm_receive : 3_sure 
-        not finish error when inherit ************************************** -->
 
-        <record id="view_picking_search_inherit" model="ir.ui.view">
-            <field name="name">state.stock.picking.search</field>
-            <field name="model">stock.picking</field>
-            <field name="inherit_id" ref="stock.view_picking_internal_search"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='partner_id']" position="before">
-                     <field name="state_confirm_receive"/>
-                     <field name="po_name"/>
-                    <!-- <filter string="state: Group C" name="state_group_c" domain="[('state_confirm_receive', '=', '3_sure')]"/> -->
-                    <filter string="state: Grouping" name="state_grouping" 
-                        domain="[('state_confirm_receive', '!=', '1_estimate'),('state_confirm_receive', '!=', '2_sup_confirm'),('state_confirm_receive', '!=', '5_done')]"/>
-                </xpath>
-            </field>
-        </record>
 
-        <!-- ******* inherit action window *************
-        <record id="module_name.record_id" model="record_model">
-            <field name="name">New record name</field>
-        </record> -->
-
-        <record id="stock.action_picking_tree_ready" model="ir.actions.act_window">
-            <field name="name">Ready transfers2</field>
-                    <field name="context">{
-                            'search_default_picking_type_id': [active_id],
-                            'default_picking_type_id': active_id,
-                            'contact_display': 'partner_address',
-                            'search_default_available': 1,
-                            'search_default_state_grouping': 1
-                    }
-                    </field>
-        </record>
         
     </data>
 </openerp>
