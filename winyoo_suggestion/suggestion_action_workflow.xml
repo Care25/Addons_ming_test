@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<openerp>
+    <data>
+    
+        <record model="workflow" id="wkf_suggestion">
+            <field name="name">suggestion.wkf</field>
+            <field name="osv">suggestion</field>
+            <field name="on_create">True</field>
+        </record>
+
+        <!-- activities -->
+        <record model="workflow.activity" id="act_draft">
+            <field name="wkf_id" ref="wkf_suggestion" />
+            <field name="flow_start">True</field>
+            <field name="name">draft</field>
+            <!-- <field name="action_id" ref="send_automatic_email"/> -->
+            <field name="kind">function</field>
+            <field name="action">button_draft()</field>
+        </record>
+        
+        
+        <record model="workflow.activity" id="act_submitted">
+            <field name="wkf_id" ref="wkf_suggestion" />
+            <field name="name">submitted</field>
+            <!-- <field name="action_id" ref="send_automatic_email"/> -->
+            <field name="kind">function</field>
+            <field name="action">button_submitted()</field>
+        </record>
+        
+        
+        <record model="workflow.activity" id="act_received">
+            <field name="wkf_id" ref="wkf_suggestion" />
+            <field name="name">received</field>
+            <field name="kind">function</field>
+            <field name="action">button_received()</field>
+        </record>
+
+
+        <record model="workflow.activity" id="act_done">
+            <field name="wkf_id" ref="wkf_suggestion" />
+            <field name="flow_stop">True</field>
+            <field name="name">done</field>
+            <field name="kind">function</field>
+            <field name="action">button_done()</field>
+        </record>
+
+        <!-- transitions -->
+        <record model="workflow.transition" id="suggestion_draft_to_submitted">
+            <field name="act_from" ref="act_draft" />
+            <field name="act_to" ref="act_submitted" />
+            <field name="signal">submitted</field>
+        </record>
+        <record model="workflow.transition" id="suggestion_submitted_to_recived">
+            <field name="act_from" ref="act_submitted" />
+            <field name="act_to" ref="act_received" />
+            <field name="signal">received</field>
+        </record>
+        <record model="workflow.transition" id="suggestion_recived_to_done">
+            <field name="act_from" ref="act_received" />
+            <field name="act_to" ref="act_done" />
+            <field name="signal">done</field>
+        </record>
+    </data>
+</openerp>

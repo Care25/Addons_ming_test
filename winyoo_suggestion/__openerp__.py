@@ -19,13 +19,14 @@
     'version': '0.1',
 
     # any module necessary for this one to work correctly
-    'depends': ['base'],
+    'depends': ['base','mail'],
 
     # always loaded
     'data': [
-#         'security/security.xml',
-#         'ir.model.access.css',
+        'security/security.xml',
         'suggestion_view.xml',
+        'data/suggestion_data.xml',
+        'suggestion_action_workflow.xml',
     ],
     # only loaded in demonstration mode
     'demo': [

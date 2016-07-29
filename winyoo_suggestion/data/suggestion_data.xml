@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+
+    <data>
+        <!-- Request-related subtypes for messaging / Chatter -->
+        <record id="mt_suggestion_to_approve" model="mail.message.subtype">
+            <field name="name">Suggestion to be Approved</field>
+            <field name="res_model">suggestion</field>
+            <field name="default" eval="True"/>
+            <field name="description">suggestion to be approved</field>
+        </record>
+
+        <record id="mt_suggestion_approved" model="mail.message.subtype">
+            <field name="name">Suggestion Approved</field>
+            <field name="res_model">suggestion</field>
+            <field name="default" eval="True"/>
+            <field name="description">suggestion approved</field>
+        </record>
+
+        <record id="mt_suggestion_done" model="mail.message.subtype">
+            <field name="name">Suggestion Done</field>
+            <field name="res_model">suggestion</field>
+            <field name="default" eval="True"/>
+            <field name="description">suggestion done</field>
+        </record>
+
+    </data>
+</openerp>

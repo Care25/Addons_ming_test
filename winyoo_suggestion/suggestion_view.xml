@@ -6,26 +6,35 @@
             <field name="name">suggestion.form</field>
             <field name="model">suggestion</field>
             <field name="arch" type="xml">
-                <form string="แจ้งเสนอแนะ">
+                <form string="แจ้งเสนอแนะ" attrs="{'edit':[('state','=','draft')]}">
+                <!-- <form string="แจ้งเสนอแนะ" edit="false"> -->
                     <header>
-                        <button string="test" type="object" name="button_suggestion" class="oe_highlight"/>
+                        <button string="ยืนยันการส่ง" type="workflow" name="submitted" 
+                            class="oe_highlight" states="draft"
+                            confirm="คุณแน่ใจที่จะ &quot;ยืนยันการส่ง&quot; เอกสารนี้ใช่หรือไม่ เอกสารนี้จะไม่สามารถแก้ไขได้ภายหลัง" 
+                            />
+                        <button string="ดำเนินการแก้ไข" type="workflow" name="received" 
+                            class="oe_highlight" states="submitted"
+                            />
+                        <button string="เสร็จสิ้น" type="workflow" name="done" 
+                            class="oe_highlight" states="received"
+                            />
                         <field name="state" widget="statusbar"
                            statusbar_visible="draft,submitted,received,done"
                            statusbar_colors='{"received":"blue"}'/>
                     </header>
                     <sheet>
-                        <!-- <group>
-                            <field name="topic" string="หัวข้อ"/>
-                        </group> -->
                         <group colspan="4" col="4">
                              	<field name="main_suggest" string="ประเภทข้อเสนอแนะ/ปัญหา" required="True"/>
                              	<field name="functional" string="กระบวนการที่เกี่ยวข้อง" 
-                             		attrs="{'invisible':[('main_suggest','=','car')]}"
-                             		required="True"/>
-                             	<field name="name" options='{"no_open": True,"no_create": 1, "no_create_edit": 1}' 
-                             			string="ผู้แจ้งเรื่อง" invisible="True"/>
+                             		attrs="{'invisible':[('main_suggest','=','car')],'required':[('main_suggest','!=','car')]}"
+                             		/>
+                             	<field name="name" options="{'create': False, 'create_edit': False, 'limit': 10}" 
+                             			string="ผู้แจ้งเรื่อง" invisible="0"/>
                              	<field name="found_date" string="วันที่พบปัญหา"/>
-                             	<!-- <field name="test"/> -->
+                             	<field name="manager" options="{'create': False, 'create_edit': False, 'limit': 10}" 
+                                        string="ผู้รับแจ้ง" context="{'defaule_suggestion_groups_ref':['suggestion_manager']}"
+                                        required="0" invisible="0"/>
                         </group>
                         <notebook>
                             <page string="Description">
@@ -35,6 +44,10 @@
                             </page>
                         </notebook>
                     </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
                 </form>
             </field>
         </record>
@@ -45,12 +58,12 @@
             <field name="model">suggestion</field>
             <field name="arch" type="xml">
                 <tree string="แจ้งปัญหา">
-                     <!-- <field name="topic" string="หัวข้อ"/> -->
                      <field name="main_suggest" string="ประเภทข้อเสนอแนะ/ปัญหา"/>
                      <field name="functional" string="กระบวนการ"/>
                      <field name="name" string="ผู้แจ้งเรื่อง"/>
                      <field name="found_date" string="วันที่พบปัญหา"/>
-                     <field name="note" placeholder="รายละเอียด"/>
+                     <!-- <field name="note" placeholder="รายละเอียด"/> -->
+                     <field name="state" string="states"/>
                 </tree>
             </field>
         </record>
@@ -60,7 +73,6 @@
             <field name="model">suggestion</field>
             <field name="arch" type="xml">
                 <search>
-                     <!-- <field name="topic" string="หัวข้อ"/> -->
                      <field name="functional" string="กระบวนการ"/>
                      <field name="name" string="ผู้แจ้งเรื่อง" />
                      <field name="found_date" string="วันที่พบปัญหา"/>
@@ -88,5 +100,8 @@
                   parent="main_suggestion_menu"/>
         <menuitem id="program_suggestion_menu" name="แจ้งปัญหาโปรแกรม" parent="topic_suggestion_menu"
                   action="suggestion_program_action"/>
+                  
+       
+                  
     </data>
 </openerp>
